@@ -1,0 +1,24 @@
+ai_settings:
+  base_url: http://127.0.0.1:1234/v1
+  model: gemma-4-e4b-it
+  provider: local_llm
+  style: hài hước, giật gân nhẹ, ngôn ngữ gen z
+  temperature: 0.7
+facebook:
+  page_id: YOUR_PAGE_ID
+  posting_schedule:
+    jitter_minutes: 15
+    time_slots:
+    - 08:00
+    - '12:00'
+    - '19:00'
+    - '22:20'
+    - '22:30'
+sources:
+  rss:
+  - category: technology
+    name: Tinhte Tech
+    url: https://tinhte.vn/rss
+system:
+  log_level: INFO
+  max_posts_per_day: 5

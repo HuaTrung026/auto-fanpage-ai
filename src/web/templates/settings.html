@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block page_title %}Cấu Hình Hệ Thống / System Settings{% endblock %}
+
+{% block content %}
+<div class="settings-card glass-panel">
+    <div id="toast-message" class="toast">Đã lưu cài đặt thành công! / Settings saved!</div>
+    <form id="settings-form" onsubmit="saveSettings(event)">
+        
+        <div class="form-section">
+            <h3><i class="fa-solid fa-shield-halved"></i> Bảo Mật / Security API Keys</h3>
+            <div class="form-group">
+                <label>Gemini API Key</label>
+                <input type="password" name="gemini_key" value="{{ env_data.gemini_key }}" placeholder="Nhập key AI của bạn / Enter AI key" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Facebook Page Token</label>
+                <input type="password" name="fb_token" value="{{ env_data.fb_token }}" placeholder="Nhập mã Facebook Token / Enter FB Token" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Tài khoản Đăng nhập / Web Username</label>
+                <input type="text" name="web_user" value="{{ env_data.web_user }}" placeholder="VD / Ex: admin" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Mật khẩu Đăng nhập / Web Password</label>
+                <input type="password" name="web_pass" value="{{ env_data.web_pass }}" placeholder="Nhập mật khẩu mới / Enter new password" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3><i class="fa-solid fa-brain"></i> Trí Tuệ Nhân Tạo / AI Settings</h3>
+            <div class="form-group">
+                <label>Nhà cung cấp / Provider</label>
+                <select name="provider" class="form-control">
+                    <option value="gemini" {% if config.ai_settings.provider == 'gemini' %}selected{% endif %}>Google Gemini</option>
+                    <option value="local_llm" {% if config.ai_settings.provider == 'local_llm' %}selected{% endif %}>Local LLM (Ollama/LM Studio)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>API Base URL (Dành cho Local LLM / For Local LLM)</label>
+                <input type="text" name="base_url" value="{{ config.ai_settings.base_url }}" class="form-control" placeholder="VD: http://localhost:11434/v1">
+            </div>
+            <div class="form-group">
+                <label>Model</label>
+                <input type="text" name="model" value="{{ config.ai_settings.model }}" required class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Độ sáng tạo / Temperature (0.0 - 1.0)</label>
+                <input type="number" step="0.1" name="temperature" value="{{ config.ai_settings.temperature }}" required class="form-control">
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <h3><i class="fa-solid fa-clock"></i> Lịch Đăng Bài / Posting Schedule</h3>
+            <div class="form-group">
+                <label>Khung Giờ / Time Slots (VD / ex: 08:00, 12:00)</label>
+                <input type="text" name="time_slots" value="{{ config.facebook.posting_schedule.time_slots | join(', ') }}" required class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Độ trễ ngẫu nhiên / Jitter (Phút / Minutes)</label>
+                <input type="number" name="jitter_minutes" value="{{ config.facebook.posting_schedule.jitter_minutes }}" required class="form-control">
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3><i class="fa-solid fa-server"></i> Hệ Thống / System</h3>
+            <div class="form-group">
+                <label>Tối đa bài mỗi ngày / Max posts per day</label>
+                <input type="number" name="max_posts" value="{{ config.system.max_posts_per_day }}" required class="form-control">
+            </div>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Lưu Cấu Hình / Save Settings</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

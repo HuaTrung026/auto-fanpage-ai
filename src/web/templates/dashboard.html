@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block page_title %}Bài Nháp Chờ Duyệt / Pending Drafts{% endblock %}
+
+{% block content %}
+<div class="quick-actions" style="display: flex; gap: 15px; margin-bottom: 20px;">
+    <button id="btn-trigger-crawl" class="btn btn-primary" onclick="triggerManualJob('crawl', this)" style="background: #8b5cf6;">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Chạy Cào Tin & AI
+    </button>
+    <button id="btn-trigger-post" class="btn btn-primary" onclick="triggerManualJob('post', this)" style="background: #3b82f6;">
+        <i class="fa-brands fa-facebook"></i> Đăng Bài Ngay
+    </button>
+</div>
+<div id="toast-message" class="toast"></div>
+
+<div class="draft-grid">
+    {% if not drafts %}
+    <div class="empty-state">
+        <div class="empty-icon">🎉</div>
+        <h3>Tất cả đã xong! / All done!</h3>
+        <p>Không có bản nháp nào đang chờ duyệt lúc này. / No pending drafts at the moment.</p>
+    </div>
+    {% else %}
+        {% for draft in drafts %}
+        <div class="draft-card glass-panel" id="draft-{{ draft.draft_id }}">
+            <div class="draft-header">
+                <span class="badge pending">Pending</span>
+                <span class="draft-id">ID: {{ draft.draft_id }}</span>
+            </div>
+            
+            <h3 class="draft-title">{{ draft.title }}</h3>
+            <a href="{{ draft.original_url }}" target="_blank" class="source-link">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Xem bài gốc / View source
+            </a>
+            
+            <div class="draft-content">
+                {% if draft.has_error %}
+                    <div class="error-msg"><i class="fa-solid fa-triangle-exclamation"></i> AI trả về định dạng lỗi / Invalid AI response format.</div>
+                    <pre class="raw-content">{{ draft.gemini_content }}</pre>
+                {% else %}
+                    {% if draft.parsed_content.get('caption_variant_1') %}
+                        <div class="variant">
+                            <h4><i class="fa-regular fa-comment-dots"></i> Variant 1</h4>
+                            <p>{{ draft.parsed_content.caption_variant_1 }}</p>
+                        </div>
+                    {% endif %}
+                    {% if draft.parsed_content.get('caption_variant_2') %}
+                        <div class="variant">
+                            <h4><i class="fa-regular fa-comment-dots"></i> Variant 2</h4>
+                            <p>{{ draft.parsed_content.caption_variant_2 }}</p>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="hashtags">
+                        <p>{{ draft.parsed_content.hashtags }}</p>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="draft-actions">
+                <button class="btn btn-approve" onclick="approveDraft({{ draft.draft_id }})">
+                    <i class="fa-solid fa-check"></i> Duyệt Đăng / Approve
+                </button>
+                <button class="btn btn-reject" onclick="rejectDraft({{ draft.draft_id }})">
+                    <i class="fa-solid fa-xmark"></i> Từ Chối / Reject
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}

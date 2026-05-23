@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto-Fanpage Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-robot"></i>
+                <span>AutoFanpage</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="/" class="nav-item {% if request.url.path == '/' %}active{% endif %}"><i class="fa-solid fa-layer-group"></i> Duyệt Bài / Drafts</a>
+                <a href="/content" class="nav-item {% if request.url.path == '/content' %}active{% endif %}"><i class="fa-solid fa-pen-nib"></i> Nguồn & Văn Phong</a>
+                <a href="/settings" class="nav-item {% if request.url.path == '/settings' %}active{% endif %}"><i class="fa-solid fa-gear"></i> Cấu Hình / Settings</a>
+                <div style="flex-grow: 1;"></div>
+                <a href="/logout" class="nav-item" style="color: #ef4444;"><i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất / Logout</a>
+            </nav>
+            <div class="sidebar-footer">
+                <p>Version 1.0.0</p>
+            </div>
+        </aside>
+        
+        <main class="main-content">
+            <header class="topbar">
+                <h1>{% block page_title %}{% endblock %}</h1>
+            </header>
+            
+            <div class="content-wrapper">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+    
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
