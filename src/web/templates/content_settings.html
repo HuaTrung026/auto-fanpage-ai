@@ -6,10 +6,12 @@
 <div class="settings-container">
     <div class="form-section">
         <h3><i class="fa-solid fa-pen-nib"></i> Văn Phong Trí Tuệ Nhân Tạo / AI Style</h3>
-        <p style="color: #94a3b8; font-size: 14px; margin-bottom: 15px;">Thần chú (Prompt) yêu cầu AI viết theo phong cách bạn muốn. Gõ càng dài, AI viết càng hay!</p>
+        <p style="color: #94a3b8; font-size: 14px; margin-bottom: 15px;">Thần chú (Prompt) yêu cầu AI viết theo phong
+            cách bạn muốn. Gõ càng dài, AI viết càng hay!</p>
         <form onsubmit="saveStyle(event)">
             <div class="form-group">
-                <textarea name="style" class="form-control" rows="4" placeholder="VD: Mày là giang hồ mạng..." required>{{ config.ai_settings.style }}</textarea>
+                <textarea name="style" class="form-control" rows="4" placeholder="VD: Mày là giang hồ mạng..."
+                    required>{{ config.ai_settings.style }}</textarea>
             </div>
             <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Lưu Văn Phong</button>
         </form>
@@ -17,8 +19,9 @@
 
     <div class="form-section">
         <h3><i class="fa-solid fa-rss"></i> Quản Lý Nguồn Báo / RSS Sources</h3>
-        <p style="color: #94a3b8; font-size: 14px; margin-bottom: 15px;">Danh sách các trang báo mạng mà hệ thống sẽ cào tin tức tự động.</p>
-        
+        <p style="color: #94a3b8; font-size: 14px; margin-bottom: 15px;">Danh sách các trang báo mạng mà hệ thống sẽ cào
+            tin tức tự động.</p>
+
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; color: white;">
             <thead>
                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left;">
@@ -32,25 +35,34 @@
                 {% for src in config.sources.rss %}
                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
                     <td style="padding: 10px;">{{ src.name }}</td>
-                    <td style="padding: 10px;"><span class="badge" style="background: rgba(59, 130, 246, 0.2); color: #3b82f6; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; text-transform: uppercase;">{{ src.category }}</span></td>
-                    <td style="padding: 10px; font-family: monospace; font-size: 12px; color: #a5b4fc;">{{ src.url }}</td>
+                    <td style="padding: 10px;"><span class="badge"
+                            style="background: rgba(59, 130, 246, 0.2); color: #3b82f6; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; text-transform: uppercase;">{{
+                            src.category }}</span></td>
+                    <td style="padding: 10px; font-family: monospace; font-size: 12px; color: #a5b4fc;">{{ src.url }}
+                    </td>
                     <td style="padding: 10px; text-align: center;">
-                        <button onclick="deleteSource({{ loop.index0 }})" class="btn" style="background: rgba(239, 68, 68, 0.2); color: #ef4444; padding: 5px 10px; min-width: 40px;" title="Xóa nguồn này"><i class="fa-solid fa-trash"></i></button>
+                        <button onclick="deleteSource({{ loop.index0 }})" class="btn"
+                            style="background: rgba(239, 68, 68, 0.2); color: #ef4444; padding: 5px 10px; min-width: 40px;"
+                            title="Xóa nguồn này"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
                 {% endfor %}
                 {% if not config.sources.rss %}
                 <tr>
-                    <td colspan="4" style="text-align: center; padding: 20px; color: #94a3b8;">Chưa có nguồn báo nào. Mời Sếp thêm ở dưới.</td>
+                    <td colspan="4" style="text-align: center; padding: 20px; color: #94a3b8;">Chưa có nguồn báo nào.
+                        Mời Sếp thêm ở dưới.</td>
                 </tr>
                 {% endif %}
             </tbody>
         </table>
 
-        <h4 style="margin-top: 30px; margin-bottom: 15px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05);"><i class="fa-solid fa-plus"></i> Thêm Nguồn Báo Mới</h4>
+        <h4
+            style="margin-top: 30px; margin-bottom: 15px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05);">
+            <i class="fa-solid fa-plus"></i> Thêm Nguồn Báo Mới</h4>
         <form onsubmit="addSource(event)" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end;">
             <div style="flex: 1; min-width: 150px;">
-                <label style="font-size: 13px; color: #94a3b8; display: block; margin-bottom: 5px;">Tên Trang Báo</label>
+                <label style="font-size: 13px; color: #94a3b8; display: block; margin-bottom: 5px;">Tên Trang
+                    Báo</label>
                 <input type="text" name="name" class="form-control" placeholder="VD: VNExpress" required>
             </div>
             <div style="flex: 1; min-width: 150px;">
@@ -58,83 +70,85 @@
                 <input type="text" name="category" class="form-control" placeholder="VD: technology" required>
             </div>
             <div style="flex: 2; min-width: 250px;">
-                <label style="font-size: 13px; color: #94a3b8; display: block; margin-bottom: 5px;">Đường link RSS</label>
+                <label style="font-size: 13px; color: #94a3b8; display: block; margin-bottom: 5px;">Đường link
+                    RSS</label>
                 <input type="url" name="url" class="form-control" placeholder="https://..." required>
             </div>
-            <button type="submit" class="btn btn-primary" style="background: #10b981; height: 42px;"><i class="fa-solid fa-plus"></i> Thêm Nguồn</button>
+            <button type="submit" class="btn btn-primary" style="background: #10b981; height: 42px;"><i
+                    class="fa-solid fa-plus"></i> Thêm Nguồn</button>
         </form>
     </div>
 </div>
 <div id="toast-message" class="toast"></div>
 
 <script>
-function showToastMsg(msg) {
-    const toast = document.getElementById('toast-message');
-    if (toast) {
-        toast.innerHTML = msg;
-        toast.classList.add('show');
-        setTimeout(() => {
-            toast.classList.remove('show');
-        }, 3000);
-    }
-}
-
-async function saveStyle(e) {
-    e.preventDefault();
-    const btn = e.target.querySelector('button');
-    const originalText = btn.innerHTML;
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Đang lưu...';
-    try {
-        const formData = new FormData(e.target);
-        const res = await fetch('/api/content/style', { method: 'POST', body: formData });
-        const data = await res.json();
-        if(res.ok) {
-            showToastMsg(data.message);
-        } else {
-            alert('Lỗi: ' + data.detail);
+    function showToastMsg(msg) {
+        const toast = document.getElementById('toast-message');
+        if (toast) {
+            toast.innerHTML = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
         }
-    } finally {
-        btn.disabled = false;
-        btn.innerHTML = originalText;
     }
-}
 
-async function addSource(e) {
-    e.preventDefault();
-    const btn = e.target.querySelector('button');
-    const originalText = btn.innerHTML;
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Đang thêm...';
-    try {
-        const formData = new FormData(e.target);
-        const res = await fetch('/api/content/sources/add', { method: 'POST', body: formData });
-        if(res.ok) {
+    async function saveStyle(e) {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Đang lưu...';
+        try {
+            const formData = new FormData(e.target);
+            const res = await fetch('/api/content/style', { method: 'POST', body: formData });
+            const data = await res.json();
+            if (res.ok) {
+                showToastMsg(data.message);
+            } else {
+                alert('Lỗi: ' + data.detail);
+            }
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+        }
+    }
+
+    async function addSource(e) {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Đang thêm...';
+        try {
+            const formData = new FormData(e.target);
+            const res = await fetch('/api/content/sources/add', { method: 'POST', body: formData });
+            if (res.ok) {
+                location.reload();
+            } else {
+                const data = await res.json();
+                alert('Lỗi: ' + data.detail);
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        } catch (err) {
+            alert("Lỗi kết nối");
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+        }
+    }
+
+    async function deleteSource(index) {
+        if (!confirm("Chắc chắn xóa nguồn báo này? Nếu xóa, bot sẽ không cào tin từ trang này nữa.")) return;
+        const formData = new FormData();
+        formData.append('index', index);
+        const res = await fetch('/api/content/sources/delete', { method: 'POST', body: formData });
+        if (res.ok) {
             location.reload();
         } else {
             const data = await res.json();
             alert('Lỗi: ' + data.detail);
-            btn.disabled = false;
-            btn.innerHTML = originalText;
         }
-    } catch(err) {
-        alert("Lỗi kết nối");
-        btn.disabled = false;
-        btn.innerHTML = originalText;
     }
-}
-
-async function deleteSource(index) {
-    if(!confirm("Chắc chắn xóa nguồn báo này? Nếu xóa, bot sẽ không cào tin từ trang này nữa.")) return;
-    const formData = new FormData();
-    formData.append('index', index);
-    const res = await fetch('/api/content/sources/delete', { method: 'POST', body: formData });
-    if(res.ok) {
-        location.reload();
-    } else {
-        const data = await res.json();
-        alert('Lỗi: ' + data.detail);
-    }
-}
 </script>
 {% endblock %}

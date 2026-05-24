@@ -147,6 +147,7 @@ async def save_settings(
     time_slots: str = Form(...),
     jitter_minutes: int = Form(...),
     max_posts: int = Form(...),
+    page_id: str = Form(...),
     gemini_key: str = Form(""),
     fb_token: str = Form(""),
     web_user: str = Form(""),
@@ -169,6 +170,7 @@ async def save_settings(
         slots = [s.strip() for s in time_slots.split(',') if s.strip()]
         data['facebook']['posting_schedule']['time_slots'] = slots
         data['facebook']['posting_schedule']['jitter_minutes'] = jitter_minutes
+        data['facebook']['page_id'] = page_id
         data['system']['max_posts_per_day'] = max_posts
         
         with open(config_path, "w", encoding="utf-8") as f:

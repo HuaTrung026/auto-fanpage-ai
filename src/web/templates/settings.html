@@ -18,6 +18,10 @@
                 <input type="password" name="fb_token" value="{{ env_data.fb_token }}" placeholder="Nhập mã Facebook Token / Enter FB Token" class="form-control">
             </div>
             <div class="form-group">
+                <label>Facebook Page ID</label>
+                <input type="text" name="page_id" value="{{ config.facebook.page_id }}" placeholder="Nhập ID của Fanpage (VD: 123456789)" required class="form-control">
+            </div>
+            <div class="form-group">
                 <label>Tài khoản Đăng nhập / Web Username</label>
                 <input type="text" name="web_user" value="{{ env_data.web_user }}" placeholder="VD / Ex: admin" class="form-control">
             </div>
